@@ -69,7 +69,7 @@ if(any(str_detect(files, "screened_data"))){
   result <- rep(NA_character_, length = nrow(df))
   i <- 1
   while (i < nrow(df)) {
-    cat("-------------------------------\n ")
+    cat("------------------------------- \n")
     cat("Title: \n", df$title[i], "\n")
     cat("\n")
     cat("Abstract: \n", df$abstract[i], "\n")
@@ -78,24 +78,25 @@ if(any(str_detect(files, "screened_data"))){
       cat("You entered an incorrect answer! You have to give an answer again. \n")
     } else if (answer == "repeat") {
       i <- i - 1
-    }else if (answer == "exit"){
+    } else if (answer == "exit"){
       cat("Please run the remainder of the file in order to save the data. \n")
       cat("Then, rerun the entire file. It will only load the non-answered abstracts and the last one.")
       # Harmonize the result
       df$screening <- result
       df$result <- harmonize_outcomes(df)
       break 
-    }  else {
+      #return(df)
+    } else {
       cat("Your answer for the last title was:", translate_answers(answer), "\n")
       result[i] <- answer
       i <- i + 1
-      if(i %% 20 == 0) print("You can leave by pressing Esc!")
+      if (i %% 20 == 0) print("You can leave by writing exit!")
     }
   }
   # 3. Combine the existing data
   df <- rbindlist(list(df, df1))
   # Save the data
-  write.csv(df, paste0("screened_data_", tolower(gsub(" ", "_", author)), ".csv"))
+  write.csv(df, paste0("screened_data_", tolower(gsub(" ", "_", author)), ".csv"), fileEncoding = "UTF-8")
   
 } else {
   # Load the data
@@ -104,7 +105,7 @@ if(any(str_detect(files, "screened_data"))){
   result <- rep(NA_character_, length = nrow(df))
   i <- 1
   while (i < nrow(df)) {
-    cat("-------------------------------\n ")
+    cat("-------------------------------\n")
     cat("Title: \n", df$title[i], "\n")
     cat("\n")
     cat("Abstract: \n", df$abstract[i], "\n")
@@ -113,7 +114,7 @@ if(any(str_detect(files, "screened_data"))){
       cat("You entered an incorrect answer! You have to give an answer again. \n")
     } else if (answer == "repeat") {
       i <- i - 1
-    }else if (answer == "exit"){
+    } else if (answer == "exit"){
       cat("Please run the remainder of the file in order to save the data. \n")
       cat("Then, rerun the entire file. It will only load the non-answered abstracts and the last one.")
       # Harmonize the result
@@ -121,16 +122,16 @@ if(any(str_detect(files, "screened_data"))){
       df$result <- harmonize_outcomes(df)
       break 
       #return(df)
-    }  else {
+    } else {
       cat("Your answer for the last title was:", translate_answers(answer), "\n")
       result[i] <- answer
       i <- i + 1
-      if(i %% 20 == 0) print("You can leave by pressing Esc!")
+      if(i %% 20 == 0) print("You can leave by writing exit!")
     }
   }
   
   # Save the data
-  write.csv(df, paste0("screened_data_", tolower(gsub(" ", "_", author)), ".csv"))
+  write.csv(df, paste0("screened_data_", tolower(gsub(" ", "_", author)), ".csv"), fileEncoding = "UTF-8")
 }
 
 cat(paste("Screening complete! Thank you,", author))
