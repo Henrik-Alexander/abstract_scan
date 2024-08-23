@@ -55,9 +55,9 @@ maybe <- readline("What is your symbol for maybe? (suggestion is -) ")
 
 # Check if there is already a screened data
 files <- list.files()
-if(any(str_detect(files, "screened_data"))){
+if(any(str_detect(string=files, pattern="screened_data"))){
   # Load the existing data
-  df <- fread(files[str_detect(files, "screened_data")], 
+  df <- fread(files[str_detect(string=files, pattern="screened_data")], 
               encoding = "UTF-8")
   
   # Select all but the last
@@ -75,7 +75,7 @@ if(any(str_detect(files, "screened_data"))){
     cat("Abstract: \n", df$abstract[i], "\n")
     answer <- readline(paste0("Is this contribution fitting the definition of formal demography of fertility? \n"))
     if (!(answer %in% c(yes, maybe, no, "exit"))) {
-      cat("You entered an incorrect answer! You have to give an answer again. \n")
+      message("You entered an incorrect answer! You have to give an answer again. \n")
     } else if (answer == "repeat") {
       i <- i - 1
     } else if (answer == "exit"){
